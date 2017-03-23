@@ -8,7 +8,7 @@ It has 3 modes:
 
 Default mode is double. 
 
-Modes BigDecimal and BigFraction are usually used for division operation of very high accuracy. BigFraction is the most accurate and it gives no precision loss. It should be noted that, that the higher accuracy is the lesser performance we get. So you should use different modes based on your requirements. 
+Modes BigDecimal and BigFraction are usually used for division operations of very high accuracy or for operations on large numbers(when double is not enough). BigFraction is the most accurate and it gives no precision loss in division operations. It should be noted that, that the higher accuracy is the lesser performance we get. So you should use different modes based on your requirements. 
 
 Mode is defined using <i>DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal;</i> or passing required mode when initiating object.
 
@@ -27,16 +27,16 @@ Example usages:
         System.out.println(DynamicNumber.factorial(300));    
         
         
-Let's say we want to calculate <i>(1/7 + (1/3)^5 - sqrt(1/9))/(1/7)</i> and compare results:  
+Let's say we want to calculate <i>(1/7 * 1/3) / (1/9) and repeat 5 times</i> and compare results:  
 
         DynamicNumber a = DynamicNumber.ONE().div(7);  
         DynamicNumber b = DynamicNumber.ONE().div(3);  
         DynamicNumber c = DynamicNumber.ONE().div(9);  
         
-        DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal; 
+        DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal;  
         DynamicNumber.rm = RoundingMode.HALF_UP; //this is default value  
         DynamicNumber.sc = 40; //sc is for scale that defines precision for BigDecimal class, default is 40  
-        DynamicNumber a1 = DynamicNumber.ONE().div(7);   
+        DynamicNumber a1 = DynamicNumber.ONE().div(7);  
         DynamicNumber b1 = DynamicNumber.ONE().div(3);  
         DynamicNumber c1 = DynamicNumber.ONE().div(9);  
         
@@ -45,17 +45,25 @@ Let's say we want to calculate <i>(1/7 + (1/3)^5 - sqrt(1/9))/(1/7)</i> and comp
         DynamicNumber b2 = DynamicNumber.ONE().div(3);  
         DynamicNumber c2 = DynamicNumber.ONE().div(9);  
         
-        System.out.println(a.add(b.pow(5)).sub(c.pow(0.5)).div(a));  
-        System.out.println(a1.add(b1.pow(5)).sub(c1.pow(0.5)).div(a1));  
-        System.out.println(a2.add(b2.pow(5)).sub(c2.pow(0.5)).div(a2) + ", Double value: " +a2.add(b2.pow(4)).sub(c2.pow(0.5)).div(a2).doubleValue());  
+        for (int i = 0; i < 5; i++) {   
+            a = a.mult(b).div(c).pow(3);  
+            a1 = a1.mult(b1).div(c1).pow(3);  
+            a2 = a2.mult(b2).div(c2).pow(3);  
+        }  
+        
+        System.out.println("Double mode: "+a);  
+        System.out.println("BigDecimal mode: " +a1.doubleValue());  
+        System.out.println("BigFraction mode: " +a2.doubleValue());    
         
 The output will be:
 
-Double mode: -1.3045267489711934  
-BigDecimal mode: -1.3045267489711932861118405427029303662135  
-BigFraction mode: -5710564327505788361 / 4377498837804122112, Double value: -1.2469135802469133  
+Double mode: 6.857909343637325E-33  
+BigDecimal mode: 6.857909343637392E-33  
+BigFraction mode: 6.857909343637393E-33    
 
-As seen above we get some deviations due to precision loss while intermediary divisions. 
+As seen above we get some minor deviations due to precision loss while intermediary divisions, which could be important in precision required calculations. 
+
+One good example for this class is that, we could implement Gaussian elemination algorithm using BigFraction mode that will give exact solutions for any linear system. 
 
 PS: Please also download Apache Commons Math library in order to use BigFraction class. Version used in project is 3.6.1 located in lib folder. Link for the latest version: http://commons.apache.org/proper/commons-math/download_math.cgi
 
