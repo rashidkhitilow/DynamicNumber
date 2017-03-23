@@ -24,7 +24,7 @@ Example usages:
         t.doubleValue();  
         t.toString();  
         t.abs();  
-        System.out.println(DynamicNumber.factorial(300));    
+        System.out.println(DynamicNumber.factorial(300));    
         
         
 Let's say we want to calculate <i>(1/7 * 1/3) / (1/9) and repeat 5 times</i> and compare results:  
