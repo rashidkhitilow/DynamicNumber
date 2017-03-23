@@ -3,12 +3,16 @@ DynamicNumber - is a simple java class for performing Number operations on diffe
 
 It has 3 modes:  
 1. Double mode - in this mode all operations will be performed using double numbers
-2. BigDecimal mode - in this mode all operations will be performed using BigDecimal numbers
-3. BigFraction mode - in this mode all operations will be performed using BigFraction number from apache commons math library.  
+2. BigDecimal mode - in this mode all operations will be performed using BigDecimal number class
+3. BigFraction mode - in this mode all operations will be performed using BigFraction number class from apache commons math library.  
 
 Default mode is double. 
 
 Modes BigDecimal and BigFraction are usually used for division operation of very high accuracy. BigFraction is the most accurate and it gives no precision loss. It should be noted that, that the higher accuracy is the lesser performance we get. So you should use different modes based on your requirements. 
+
+Mode is defined using <i>DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal;</i> or passing required mode when initiating object.
+
+DynamicNumber class also has function factorial that uses BigInteger class to calculate factorial for large integers when double accuracy is not enough. 
 
 Example usages:  
 
@@ -29,7 +33,9 @@ Let's say we want to calculate <i>(1/7 + (1/3)^5 - sqrt(1/9))/(1/7)</i> and comp
         DynamicNumber b = DynamicNumber.ONE().div(3);  
         DynamicNumber c = DynamicNumber.ONE().div(9);  
         
-        DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal;  
+        DynamicNumber.modeDefault = DynamicNumber.modeBigDecimal; 
+        DynamicNumber.rm = RoundingMode.HALF_UP; //this is default value  
+        DynamicNumber.sc = 40; //sc is for scale that defines precision for BigDecimal class, default is 40  
         DynamicNumber a1 = DynamicNumber.ONE().div(7);   
         DynamicNumber b1 = DynamicNumber.ONE().div(3);  
         DynamicNumber c1 = DynamicNumber.ONE().div(9);  
