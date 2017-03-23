@@ -51,4 +51,6 @@ BigFraction mode: -5710564327505788361 / 4377498837804122112, Double value: -1.2
 
 As seen above we get some deviations due to precision loss while intermediary divisions. 
 
+PS: Please also download Apache Commons Math library in order to use BigFraction class. Version used in project is 3.6.1 located in lib folder. Link for the latest version: http://commons.apache.org/proper/commons-math/download_math.cgi
+
 
