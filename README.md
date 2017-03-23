@@ -1,7 +1,5 @@
 # DynamicNumber
-DynamicNumber - is java class for performing Number operations on different accuracy mode (double mode, BigDecimal mode, BigFraction mode)
-
-DynamicNumber java class is used to perform numeric operations on different accuracies.   
+DynamicNumber - is a simple java class for performing Number operations on different accuracy modes (double mode, BigDecimal mode, BigFraction mode)
 
 It has 3 modes:  
 1. Double mode - in this mode all operations will be performed using double numbers
