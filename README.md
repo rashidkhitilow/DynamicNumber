@@ -1,5 +1,5 @@
 # DynamicNumber
-DynamicNumber - is a simple java class for performing Number operations on different accuracy modes (double mode, BigDecimal mode, BigFraction mode)
+DynamicNumber - is a simple java class for performing Number operations on different accuracy modes (Double mode, BigDecimal mode, BigFraction mode)
 
 It has 3 modes:  
 1. Double mode - in this mode all operations will be performed using double numbers
@@ -8,7 +8,7 @@ It has 3 modes:
 
 Default mode is double. 
 
-Modes BigDecimal and BigFraction are usually used for division operation of very high accuracy. 
+Modes BigDecimal and BigFraction are usually used for division operation of very high accuracy. BigFraction is the most accurate and it gives no precision loss. It should be noted that, that the higher accuracy is the lesser performance we get. So you should use different modes based on your requirements. 
 
 Example usages:  
 
