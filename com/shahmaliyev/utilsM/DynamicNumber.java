@@ -5,6 +5,7 @@
  */
 package com.shahmaliyev.utilsM;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -14,7 +15,7 @@ import org.apache.commons.math3.fraction.BigFraction;
  *
  * @author mamed.shahmaliyev
  */
-public final class DynamicNumber{
+public final class DynamicNumber implements Serializable{
     private double numberDouble;
     
     public static RoundingMode rm = RoundingMode.HALF_UP;
@@ -29,12 +30,16 @@ public final class DynamicNumber{
     public static byte modeDefault=1;
     
     public static DynamicNumber min(DynamicNumber a,DynamicNumber b){
-        if(a.compareTo(b) == 1) return b;
-        else return a;
+        if (a.mode == modeDouble) return new DynamicNumber(Math.min(a.doubleValue(), b.doubleValue()));
+        else if (a.mode == modeBigDecimal) return new DynamicNumber(a.bigDecimalValue().min(b.bigDecimalValue()));
+        else if (a.mode == modeBigFraction) return (a.bigFractionValue().compareTo(b.bigFractionValue()) < 0)?a:b;
+        else return DynamicNumber.ZERO();
     }
     public static DynamicNumber max(DynamicNumber a,DynamicNumber b){
-        if(a.compareTo(b) == 1) return a;
-        else return b;
+        if (a.mode == modeDouble) return new DynamicNumber(Math.max(a.doubleValue(), b.doubleValue()));
+        else if (a.mode == modeBigDecimal) return new DynamicNumber(a.bigDecimalValue().max(b.bigDecimalValue()));
+        else if (a.mode == modeBigFraction) return (a.bigFractionValue().compareTo(b.bigFractionValue()) > 0)?a:b;
+        else return DynamicNumber.ZERO();
     }
 
     public DynamicNumber(double a,byte m) {mode=m; if(mode==modeDouble)numberDouble=a;else if(mode==modeBigDecimal)numberBigDecimal=new BigDecimal(a);else if(mode==modeBigFraction)numberBigFraction=new BigFraction(a);}
